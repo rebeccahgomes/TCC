@@ -1,0 +1,29 @@
+import pandas as pd
+
+dados = pd.read_csv('Trace.csv')
+dados.head(10)
+
+dados.columns=["Amostra", "Horario", "Temperatura"]
+dados.head(10)
+
+media = dados.Temperatura.mean()
+media
+
+mediana = dados.Temperatura.median()
+mediana
+
+desvio = dados.Temperatura.std()
+desvio
+
+dados_calculados = [media, mediana, desvio]
+dados_calculados = pd.Series(dados_calculados)
+dados_calculados
+
+dados_calculados = pd.DataFrame(dados_calculados)
+dados_calculados.columns = ['Valores']
+dados_calculados.index = ['Média', 'Mediana', 'Desvio Padrão']
+dados_calculados
+
+dados.Temperatura.plot(title = 'Resposta ao sistema')
+
+dados_calculados.plot(y ='Valores', kind = 'bar', title='Parâmetros Calculados', grid = True)
