@@ -1,0 +1,148 @@
+import pandas as pd
+%matplotlib inline
+import matplotlib.pyplot as plt
+plt.rc('figure', figsize = (15,8))
+
+dados = pd.read_csv('Ensaio_1.csv')
+dados.head()
+
+# Alteração dos nomes das colunas e deleção da coluna Horario
+dados.columns=["Amostra", "Horario", "Temperatura"]
+dados.head()
+
+dados_limpo = dados.drop(['Horario'], axis = 1)
+dados_limpo.head()
+
+#Correção da coluna "Amostra"
+tamanho = dados_limpo.shape[0]
+amostra = ['Amostra '+str(i) for i in range (0,tamanho)]
+dados_limpo['Amostra'] = amostra
+dados_limpo.head()
+
+#Inclusão da coluna "Ciclo"
+ciclo = [i*0.05 for i in range (1,tamanho+1)]
+dados_limpo['Ciclo (s)'] = ciclo
+dados_limpo.head()
+
+# Divisão dos ensaios
+Ensaio_1 = dados_limpo[dados_limpo.index <= 12243]
+Ensaio_1.head()
+
+Ensaio_2 = dados_limpo.iloc[12244:24503,:]
+Ensaio_2.head()
+
+Ensaio_3 = dados_limpo[dados_limpo.index >= 24504] 
+Ensaio_3.head()
+
+# Cálculo dos parâmetros
+## Cálculo dos parâmetros - Ensaio completo
+
+media_total = dados_limpo.Temperatura.mean()
+media_total
+mediana_total = dados_limpo.Temperatura.median()
+mediana_total
+desvio_total = dados_limpo.Temperatura.std()
+desvio_total
+variancia_total = dados_limpo.Temperatura.var()
+variancia_total
+desvio_medio_total = dados_limpo.Temperatura.mad()
+desvio_medio_total
+
+## Cálculos dos Parâmetros - Ensaio 1
+
+media_ensaio_1 = Ensaio_1.Temperatura.mean()
+media_ensaio_1
+mediana_ensaio_1 = Ensaio_1.Temperatura.median()
+mediana_ensaio_1
+desvio_ensaio_1 = Ensaio_1.Temperatura.std()
+desvio_ensaio_1
+variancia_ensaio_1 = Ensaio_1.Temperatura.var()
+variancia_ensaio_1
+desvio_medio_ensaio_1 = Ensaio_1.Temperatura.mad()
+desvio_medio_ensaio_1
+
+## Cálculos dos Parâmetros - Ensaio 2
+
+media_ensaio_2 = Ensaio_2.Temperatura.mean()
+media_ensaio_2
+mediana_ensaio_2= Ensaio_2.Temperatura.median()
+mediana_ensaio_2
+desvio_ensaio_2 = Ensaio_2.Temperatura.std()
+desvio_ensaio_2
+variancia_ensaio_2 = Ensaio_2.Temperatura.var()
+variancia_ensaio_2
+desvio_medio_ensaio_2 = Ensaio_2.Temperatura.mad()
+desvio_medio_ensaio_2
+
+## Cálculos dos Parâmetros - Ensaio 3
+
+media_ensaio_3 = Ensaio_3.Temperatura.mean()
+media_ensaio_3
+mediana_ensaio_3 = Ensaio_3.Temperatura.median()
+mediana_ensaio_3
+desvio_ensaio_3 = Ensaio_3.Temperatura.std()
+desvio_ensaio_3
+variancia_ensaio_3 = Ensaio_3.Temperatura.var()
+variancia_ensaio_3
+desvio_medio_ensaio_3 = Ensaio_3.Temperatura.mad()
+desvio_medio_ensaio_3
+
+## Criando uma Series com os dados calculados (desvio padrao, media  e mediana)
+
+dados_calculados_total = [media_total, mediana_total, variancia_total, desvio_total, desvio_medio_total]
+dados_calculados_total = pd.Series(dados_calculados_total)
+dados_calculados_total
+
+dados_calculados_ensaio_1 = [media_ensaio_1, mediana_ensaio_1, variancia_ensaio_1, desvio_ensaio_1, desvio_medio_ensaio_1]
+dados_calculados_ensaio_1 = pd.Series(dados_calculados_ensaio_1)
+dados_calculados_ensaio_1
+
+dados_calculados_ensaio_2 = [media_ensaio_2, mediana_ensaio_2, variancia_ensaio_2, desvio_ensaio_2, desvio_medio_ensaio_2]
+dados_calculados_ensaio_2 = pd.Series(dados_calculados_ensaio_2)
+dados_calculados_ensaio_2
+
+dados_calculados_ensaio_3 = [media_ensaio_3, mediana_ensaio_3, variancia_ensaio_3, desvio_ensaio_3, desvio_medio_ensaio_3]
+dados_calculados_ensaio_3 = pd.Series(dados_calculados_ensaio_3)
+dados_calculados_ensaio_3
+
+## Transformando a Series em um DataFrame
+
+dados_calculados_total = pd.DataFrame(dados_calculados_total)
+dados_calculados_total.columns = ['Valores']
+dados_calculados_total.index = ['Média', 'Mediana', 'Variância', 'Desvio Padrão', 'Desvio Médio Absoluto']
+dados_calculados_total
+
+dados_calculados_ensaio_1 = pd.DataFrame(dados_calculados_ensaio_1)
+dados_calculados_ensaio_1.columns = ['Valores']
+dados_calculados_ensaio_1.index = ['Média', 'Mediana', 'Variância', 'Desvio Padrão', 'Desvio Médio Absoluto']
+dados_calculados_ensaio_1
+
+dados_calculados_ensaio_2 = pd.DataFrame(dados_calculados_ensaio_2)
+dados_calculados_ensaio_2.columns = ['Valores']
+dados_calculados_ensaio_2.index = ['Média', 'Mediana', 'Variância', 'Desvio Padrão', 'Desvio Médio Absoluto']
+dados_calculados_ensaio_2
+
+dados_calculados_ensaio_3 = pd.DataFrame(dados_calculados_ensaio_3)
+dados_calculados_ensaio_3.columns = ['Valores']
+dados_calculados_ensaio_3.index = ['Média', 'Mediana', 'Variância', 'Desvio Padrão', 'Desvio Médio Absoluto']
+dados_calculados_ensaio_3
+
+## Plot da resposta e dos parâmetros - Total
+
+dados_limpo.Temperatura.plot(title = 'Resposta ao sistema - Total', grid = True)
+dados_calculados_total.plot(y ='Valores', kind = 'bar', title='Parâmetros Calculados Total', grid = True, width = 1)
+
+## Plot da resposta e dos parâmetros - Ensaio 1
+
+Ensaio_1.Temperatura.plot(title = 'Resposta ao sistema - Ensaio 1', grid = True)
+dados_calculados_ensaio_1.plot(y ='Valores', kind = 'bar', title='Parâmetros Ensaio 1', grid = True, width = 1)
+
+## Plot da resposta e dos parâmetros - Ensaio 2
+
+Ensaio_2.Temperatura.plot(title = 'Resposta ao sistema - Ensaio 2', grid = True)
+dados_calculados_ensaio_2.plot(y ='Valores', kind = 'bar', title='Parâmetros Ensaio 2', grid = True, width = 1)
+
+## Plot da resposta e dos parâmetros - Ensaio 3
+
+Ensaio_3.Temperatura.plot(title = 'Resposta ao sistema - Ensaio 3', grid = True)
+dados_calculados_ensaio_3.plot(y ='Valores', kind = 'bar', title='Parâmetros Ensaio 3', grid = True, width = 1)
